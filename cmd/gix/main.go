@@ -15,17 +15,22 @@ func main() {
 		help()
 		return
 	}
-	runAndPrint(prepareCommand(args))
+	preparedArgs, err := prepareCommand(args)
+	if err != nil {
+		fmt.Printf("%s %v\n", color.New(color.FgRed).Sprintf("Error:"), err)
+		return
+	}
+	runAndPrint(preparedArgs)
 }
 
-func prepareCommand(args []string) []string {
+func prepareCommand(args []string) ([]string, error) {
 	switch args[0] {
 	case "back":
 		return command.Back()
 	case "commit":
 		return command.Commit(args)
 	}
-	return args
+	return args, nil
 }
 
 func runAndPrint(args []string) {

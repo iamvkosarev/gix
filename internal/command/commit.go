@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func Commit(args []string) []string {
+func Commit(args []string) ([]string, error) {
 	commitTime := time.Now()
 	timeSecondsMap := map[string]int{
 		"mS": -1,
@@ -29,16 +29,15 @@ func Commit(args []string) []string {
 				if i < len(args)-1 {
 					v, err := strconv.Atoi(args[i+1])
 					if err != nil {
-						fmt.Printf("Invalid value for time key \"%s\"\n, expected int", key)
-						return nil
+						return nil, fmt.Errorf("invalid value for time key \"%s\", expected int", key)
 					}
 					commitTime = commitTime.Add(time.Duration(v*seconds) * time.Second)
 					i++
 					normalArg = false
 					break
 				} else {
-					fmt.Printf("Null input after time key \"%s\"\n", key)
-					return nil
+
+					return nil, fmt.Errorf("null input after time key \"%s\"", key)
 				}
 			}
 		}
@@ -55,12 +54,12 @@ func Commit(args []string) []string {
 	const gitAuthorDate = "GIT_AUTHOR_DATE"
 	err := os.Setenv(gitCommiterDate, commitTime.Format(time.RFC3339))
 	if err != nil {
-		fmt.Printf("Error setting %s: %s\n", gitCommiterDate, err)
+		return nil, fmt.Errorf("error setting %s: %s\n", gitCommiterDate, err)
 	}
 	err = os.Setenv(gitAuthorDate, commitTime.Format(time.RFC3339))
 	if err != nil {
-		fmt.Printf("Error setting %s: %s\n", gitAuthorDate, err)
+		return nil, fmt.Errorf("error setting %s: %s\n", gitAuthorDate, err)
 	}
 	fmt.Printf("Commit at: %s\n", commitTime.Format("2006-01-02 15:04:05"))
-	return normalArgs
+	return normalArgs, nil
 }

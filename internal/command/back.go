@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func Back() []string {
+func Back() ([]string, error) {
 	cmd := exec.Command(
 		"git", []string{
 			"log",
@@ -27,13 +27,11 @@ func Back() []string {
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return nil, err
 	}
 	outRawArgs := strings.Split(buf.String(), "@@")
 	if len(outRawArgs) != 3 {
-		fmt.Printf("Usage: not correct out args: %s\n", s)
-		return nil
+		return nil, fmt.Errorf("usage: not correct out args: %s", s)
 	}
 	// TODO: Add time return
 	outArgs := []string{
@@ -53,5 +51,5 @@ func Back() []string {
 		"reset",
 		"--soft",
 		"HEAD~1",
-	}
+	}, nil
 }
