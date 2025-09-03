@@ -33,7 +33,17 @@ func help() {
 		"mM": "minus minutes",
 		"mS": "minus seconds",
 	}
-	for arg, disc := range argsDiscMap {
-		fmt.Printf("  -%s - %s\n", formatArg(arg), disc)
+	order := []string{
+		"pD",
+		"pH",
+		"pM",
+		"pS",
+		"mD",
+		"mH",
+		"mM",
+		"mS",
+	}
+	for _, arg := range order {
+		fmt.Printf("  -%s - %s\n", formatArg(arg), argsDiscMap[arg])
 	}
 }
