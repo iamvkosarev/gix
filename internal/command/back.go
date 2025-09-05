@@ -46,7 +46,7 @@ func Back() ([]string, error) {
 		)
 	}
 	changeColor := color.New(color.FgHiMagenta).SprintFunc()
-	fmt.Printf("Revert: %s\n", changeColor(fmt.Sprintf("gix Commit %s", strings.Join(outArgs, " "))))
+	fmt.Printf("Revert: %s\n", changeColor(fmt.Sprintf("gix commit %s", strings.Join(outArgs, " "))))
 	return []string{
 		"reset",
 		"--soft",
