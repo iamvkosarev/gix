@@ -27,15 +27,17 @@ func help() {
 
 func printBackCommandHelp(formatCmd func(a ...interface{}) string, formatCmdInText func(a ...interface{}) string) {
 	fmt.Printf(
-		"%s - reset last commit and print the command to undo it.\nBased on %s command.\n\n", formatCmd("back"),
+		"%s - reset last commit and print the command to undo it.\nBased on the %s command.\n\n", formatCmd("back"),
 		formatCmdInText("git reset --soft HEAD~1"),
 	)
 }
 
 func printCommitCommandHelp(formatCmd func(a ...interface{}) string, formatCmdInText func(a ...interface{}) string) {
 	fmt.Printf(
-		"%s - classic %s command, but with addition flags to modify time:\n", formatCmd("commit"),
+		"%s - classic %s command, but with addition flags to modify time. For example, if the current time is "+
+			"4:00 and you call the %s command, the commit will have a timestamp of 4:19.\n", formatCmd("commit"),
 		formatCmdInText("git commit"),
+		formatCmd("gix commit -m \"Some commit\" -pM 19"),
 	)
 }
 
@@ -68,7 +70,7 @@ func printCommitCommandArgsHelp(formatArg func(a ...interface{}) string) {
 
 func printSaveCommandHelp(formatCmd func(a ...interface{}) string, formatCmdInText func(a ...interface{}) string) {
 	fmt.Printf(
-		"%s - same %s command, but with additional saving step of all changes.\nBased on %s command.\n",
+		"%s - same %s command, but with additional saving step of all changes.\nBased on the %s command.\n",
 		formatCmd("save"),
 		formatCmd("commit"),
 		formatCmdInText("git add ."),
