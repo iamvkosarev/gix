@@ -29,6 +29,8 @@ func prepareCommand(args []string) ([]string, error) {
 		return command.Back()
 	case "commit":
 		return command.Commit(args)
+	case "save":
+		return command.Save(args)
 	}
 	return args, nil
 }
