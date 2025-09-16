@@ -44,10 +44,21 @@ func runAndPrint(args []string) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	changeColor := color.New(color.FgGreen).SprintFunc()
-	fmt.Printf("Running: %s", changeColor(fmt.Sprintf("git %s\n", strings.Join(args, " "))))
+	printRunningCommand(args)
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func printRunningCommand(args []string) {
+	changeColor := color.New(color.FgGreen).SprintFunc()
+	for i := 1; i < len(args); i++ {
+		arg := args[i]
+		if arg[:1] == "-" && arg[:2] != "--" && i+1 < len(args) {
+			args[i+1] = fmt.Sprintf("\"%s\"", args[i+1])
+			i++
+		}
+	}
+	fmt.Printf("Running: %s", changeColor(fmt.Sprintf("git %s\n", strings.Join(args, " "))))
 }

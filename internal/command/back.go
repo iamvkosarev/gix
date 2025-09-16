@@ -36,13 +36,13 @@ func Back() ([]string, error) {
 	// TODO: Add time return
 	outArgs := []string{
 		"-m",
-		outRawArgs[0],
+		fmt.Sprintf("\"%s\"", outRawArgs[0]),
 	}
 	if outRawArgs[1] != "" {
 		outArgs = append(
 			outArgs,
 			"-m",
-			outRawArgs[1],
+			fmt.Sprintf("\"%s\"", strings.TrimRight(outRawArgs[1], "\n")),
 		)
 	}
 	changeColor := color.New(color.FgHiMagenta).SprintFunc()

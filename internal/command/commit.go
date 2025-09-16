@@ -43,7 +43,7 @@ func Commit(args []string) ([]string, error) {
 		}
 		if normalArg {
 			if !strings.HasPrefix(arg, "-") && i != 0 {
-				normalArgs = append(normalArgs, fmt.Sprintf("\"%s\"", arg))
+				normalArgs = append(normalArgs, fmt.Sprintf("%s", arg))
 			} else {
 				normalArgs = append(normalArgs, arg)
 			}
